@@ -1,0 +1,268 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/js-googlemap.search.js":
+/*!*********************************************!*\
+  !*** ./resources/js/js-googlemap.search.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var map;
+var service;
+var infowindow;
+var currentInfoWindow = null; //インフォウィンドウの初期値
+
+initialize(); //初期状態の設定
+
+function initialize() {
+  //現在地を中心とした地図を初期値として表示
+  if (navigator.geolocation) {
+    // 現在地を取得
+    navigator.geolocation.getCurrentPosition( // 取得成功した場合
+    function (position) {
+      // 緯度・経度を変数に格納
+      var pyrmont = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); // マップオブジェクト作成
+
+      map = new google.maps.Map(document.getElementById('map'), // マップを表示する要素
+      {
+        zoom: 15,
+        // 拡大倍率
+        center: pyrmont // 緯度・経度
+
+      });
+      nearbySearch(pyrmont);
+    }, // 取得失敗した場合
+    function (error) {
+      // エラーメッセージを表示
+      switch (error.code) {
+        case 1:
+          // PERMISSION_DENIED
+          alert("位置情報の利用が許可されていません");
+          break;
+
+        case 2:
+          // POSITION_UNAVAILABLE
+          alert("現在位置が取得できませんでした");
+          break;
+
+        case 3:
+          // TIMEOUT
+          alert("タイムアウトになりました");
+          break;
+
+        default:
+          alert("その他のエラー(エラーコード:" + error.code + ")");
+          break;
+      }
+    }); // Geolocation APIに対応していない
+  } else {
+    alert("この端末では位置情報が取得できません");
+  }
+} //検索窓で検索し、中央位置を設定する→半径1500m内の本屋さんを検索
+
+
+function search() {
+  var geocoder = new google.maps.Geocoder();
+  document.getElementById('search').addEventListener('click', function () {
+    geocoder.geocode({
+      address: document.getElementById('keyword').value
+    }, function (resultsGeo, statusGeo) {
+      if (statusGeo == google.maps.GeocoderStatus.OK) {
+        var lat = resultsGeo[0].geometry.location.lat();
+        var lng = resultsGeo[0].geometry.location.lng();
+        var pyrmont = resultsGeo[0].geometry.location; // 位置座標のインスタンスを作成する
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pyrmont,
+          zoom: 15
+        });
+        nearbySearch(pyrmont);
+        createMarker();
+      } else if (statusGeo == google.maps.GeocoderStatus.ZERO_RESULTS) {
+        alert("見つかりません");
+      } else {
+        console.log(statusGeo);
+        alert("エラー発生");
+      }
+    });
+  });
+}
+
+;
+
+function createMarker(latlng, icn, place) {
+  // マーカー作成　　https://developers.google.com/maps/documentation/javascript/examples/marker-simple　参照
+  var marker = new google.maps.Marker({
+    position: latlng,
+    map: map
+  }); //markerクリック時に場所の名前と緯度,経度を表示　2020.05.16
+  //吹き出しに緯度経度を表示
+
+  var placename = place.name; //console.log(placename);
+
+  var latlngstring = latlng.toString(); //console.log(latdata);
+
+  var contentString = placename + '<br/>' + latlngstring;
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+  marker.addListener('click', function () {
+    //マーカーをクリックした際に、既に吹き出し表示されている場合はクローズ 2020.05.19
+    if (currentInfoWindow) {
+      currentInfoWindow.close();
+    }
+
+    map.setCenter(latlng);
+    infowindow.open(map, marker);
+    currentInfoWindow = infowindow;
+    console.log(placename);
+    console.log(latlngstring);
+    clickAddress(latlng);
+  });
+} //クリックした時に住所情報を取得 2020.05.20
+
+
+function clickAddress(latlng) {
+  //住所を出力
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    location: latlng
+  }, function (res, sta) {
+    if (sta == google.maps.GeocoderStatus.OK) {
+      var address = res[0].address_components; //都道府県名
+
+      var pref = address[address.length - 3].long_name;
+      console.log(pref);
+      var addressCity = res[0].formatted_address; //住所
+
+      addressCity = addressCity.substring(addressCity.indexOf(pref));
+      console.log(addressCity);
+    }
+  });
+}
+
+function nearbySearch(pyrmont) {
+  //指定位置の半径1500m内の書店を検索
+  var request = {
+    location: pyrmont,
+    radius: '1500',
+    type: ['book_store'] // https://developers.google.com/places/supported_types 参照
+
+  };
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        var place = results[i]; //console.log(place);
+
+        latlng = place.geometry.location;
+        icn = place.icon;
+        createMarker(latlng, icn, place);
+      }
+    }
+  }
+}
+
+/***/ }),
+
+/***/ 2:
+/*!************************************************!*\
+  !*** multi ./resources/js/js-googlemap.search ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/ec2-user/environment/bookstore/resources/js/js-googlemap.search */"./resources/js/js-googlemap.search.js");
+
+
+/***/ })
+
+/******/ });
