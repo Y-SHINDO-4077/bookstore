@@ -3,7 +3,7 @@
 @section('title','リストを新規作成する')
 
  <!--google map api -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
 <script async defer type="text/javascript" src="{{ secure_asset('js/js-googlemap.search.js') }}"></script>
          
 @section('content')

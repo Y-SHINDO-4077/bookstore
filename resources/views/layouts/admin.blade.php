@@ -11,9 +11,7 @@
          
          <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
          
-          <!--google map api -->
-         <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>-->
-         <!--<script defer type="text/javascript" src="{{ secure_asset('js/js-googlemap.search.js') }}"></script>-->
+          
          
          <script src="{{ secure_asset('js/app.js') }}" defer></script>
          <!--<script src="{{ secure_asset('js/js-register.blade.js') }}" defer></script>-->
