@@ -32,13 +32,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->middleware('verified');
 
 
-//本登録メール
-Route::middleware('verified')->group(function(){
-    Route::get('verified',function(){
-        return '本登録が完了しています。';
-    });
-});
+// //本登録メール
+// Route::middleware('verified')->group(function(){
+//     Route::get('verified',function(){
+//         return '本登録が完了しています。';
+//     });
+// });
+// Route::middleware('verified')->group(function () {
+//     Route::group(['middleware' => 'auth:user'], function () {
+//         // メール認証済みかつログイン済みのユーザーが見れる画面
+//         Route::get('/home', 'HomeController@index')->name('home');
+//     });
+// });
 
 Route::get('/','ListController@index');
 Route::get('/about','ListController@about');
 Route::get('/list','ListController@list');
+
+Route::get('/html',function(){
+    return  \File::get(public_path() . '/googlemap.html');
+});
