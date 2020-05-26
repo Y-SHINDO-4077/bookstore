@@ -2,9 +2,7 @@
 
 @section('title','リストを新規作成する')
 
- <!--google map api -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
-<script async defer type="text/javascript" src="{{ secure_asset('js/js-googlemap.search.js') }}"></script>
+ 
          
 @section('content')
  <div class="container">
@@ -14,7 +12,7 @@
              <h2>新規作成</h2>
        </div>
       
-      <div id="map" style="height: 500px; width: 500px; margin: 2rem auto 0;"></div>
+      <div id="map" style="height: 500px; width: 720px; margin: 2rem auto 0;"></div>
 
     <!--検索窓-->
     <div style="text-align:center;">
@@ -26,6 +24,13 @@
         
     　　<!--<script src="{{ secure_asset('js/js-googlemap.search.js') }}" defer></script>-->
     　<form method="POST" enctype="multipart/form-data" action="#">
+    　    @if(count($errors)>0)
+    　    <ul>
+    　        @foreach($errors->all() as $e)
+    　        <li>{{$e}}</li>
+    　        @endforeach
+    　    </ul>
+    　   @endif
        <div class="flex-column">
          <div class="align-items-center">  
          <!--場所-->
@@ -58,23 +63,25 @@
          
          <!--画像選択 -->
          <div class="col-md-10  form-group">
-             <button type="button" class="btn btn-secondary">選択</button>
+             <button type="file" class="btn btn-secondary">選択</button>
              <label class="col-form-label">画像を選択</label>
+         
          </div>
          
          <!--ハンドルネーム-->
-          <div class="col-md-10 form-group">
-            <label class="col-form-label" for="inputDefaultHandle">ハンドルネーム</label>
-            <input type="text" class="form-control" placeholder="ハンドルネームを入力してください" id="inputDefaultHandle">
-          </div>   
+     <!--     <div class="col-md-10 form-group">-->
+     <!--       <label class="col-form-label" for="inputDefaultHandle">ハンドルネーム</label>-->
+     <!--       <input type="text" class="form-control" placeholder="ハンドルネームを入力してください" id="inputDefaultHandle">-->
+     <!--     </div>   -->
           
           <!--お気に入りコメント -->
-          <div class="col-md-10 form-group">
-            <label class="col-form-label col-form-label-lg" for="inputDefaultComment">お気に入りコメント</label>
-  　　　　　　<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg" id="inputLrcge">
-　　　　　</div>
+     <!--     <div class="col-md-10 form-group">-->
+     <!--       <label class="col-form-label col-form-label-lg" for="inputDefaultComment">お気に入りコメント</label>-->
+  　　　<!--　　　<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg" id="inputLrcge">-->
+　　　　　<!--</div>-->
 　　　　　
 　　　　　<div class="col-md-10 form-group">
+　　　　　    {{ csrf_field()}}
 　　　　   　<button type="submit" class="btn btn-primary">登録</button>
 　　　　　</div>
 　　　　　
@@ -84,4 +91,9 @@
       </div> 
      </div>
  </div>
+@endsection
+@section('footer')
+<!--google map api -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+<script async defer type="text/javascript" src="{{asset('js/js-googlemap.search.js')}}"></script>
 @endsection

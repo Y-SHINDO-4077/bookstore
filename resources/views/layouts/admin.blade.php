@@ -7,6 +7,21 @@
          
          <meta name="csrf-token" content="{{ csrf_token() }}">
          
+         <style>
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .search {
+        height:100%;
+        text-align:center;
+      }
+      </style>
+         
          <title>@yield('title')</title>
          
          <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -77,5 +92,6 @@
                  @yield('content')
              </main>
          </div>
+          @yield('footer')
      </body>
 </html>

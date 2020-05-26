@@ -50,5 +50,5 @@ Route::get('/about','ListController@about');
 Route::get('/list','ListController@list');
 
 Route::get('/html',function(){
-    return  \File::get(public_path() . '/googlemap.html');
+    return  \File::get(resource_path() . '/views/googlemap.html');
 });
