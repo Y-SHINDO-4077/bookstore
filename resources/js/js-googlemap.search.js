@@ -4,7 +4,7 @@
       var currentInfoWindow = null; //インフォウィンドウの初期値
 
 
-      initialize()   //初期状態の設定
+      initialize();   //初期状態の設定
       var searchBtn = document.getElementById("search");
       var initBtn = document.getElementById("init");
       var clearBtn = document.getElementById("clear");
@@ -35,27 +35,27 @@
                     switch(error.code) {
                       case 1: // PERMISSION_DENIED
                         alert("位置情報の利用が許可されていません");
-                        　  // 緯度・経度を変数に格納
+                       // 緯度・経度を変数に格納
                    　　　var pyrmont = new google.maps.LatLng(35.681236,139.767125);
-                    　　　　// マップオブジェクト作成
+                       // マップオブジェクト作成
                     　　　　map = new google.maps.Map(document.getElementById('map'), // マップを表示する要素
-                      　　{zoom : 15,          // 拡大倍率
-                      　　　center : pyrmont // 緯度・経度
-                    　　　}
-                    　　　);
-                    　　nearbySearch(pyrmont);
+                         {zoom : 15,// 拡大倍率
+                          center : pyrmont // 緯度・経度
+                         }
+                        );
+                       nearbySearch(pyrmont);
                         break;
                       case 2: // POSITION_UNAVAILABLE
                         alert("現在位置が取得できませんでした");
                           // 緯度・経度を変数に格納
                    　　　var pyrmont = new google.maps.LatLng(35.681236,139.767125);
-                    　　　　// マップオブジェクト作成
+                    　　　　// マップオブジ���クト作成
                     　　　　map = new google.maps.Map(document.getElementById('map'), // マップを表示する要素
-                      　　{zoom : 15,          // 拡大倍率
-                      　　　center : pyrmont // 緯度・経度
+                          {zoom : 15,          // 拡大倍率
+                          center:pyrmont//緯度・経度
                     　　　}
-                    　　　);
-                    　　nearbySearch(pyrmont);
+                          );
+                         nearbySearch(pyrmont);
                         break;
                       case 3: // TIMEOUT
                         alert("タイムアウトになりました");
@@ -70,15 +70,6 @@
               } else {
                 alert("この端末では位置情報が取得できません");
               }
-
-
-        // 位置座標のインスタンスを作成する
-        //var pyrmont = new google.maps.LatLng(35.0441263,135.7873418); //京都市左京区一乗寺駅周辺
-        //map = new google.maps.Map(document.getElementById('map'), {
-        //    center: pyrmont,
-        //    zoom: 10
-        //  });
-          //nearbySearch(pyrmont);
        }
 
       //検索窓で検索し、中央位置を設定する→半径1500m内の本屋さんを検索
@@ -90,19 +81,9 @@
              address:document.getElementById('keyword').value
           },function(resultsGeo,statusGeo){
             if(statusGeo == google.maps.GeocoderStatus.OK){
-            //  console.log(results[0].geometry);
-            //  console.log(results.length);
-
-              //var bounds = new google.maps.LatLngBounds();
-　　　　       //console.log(resultsGeo);
-              var lat = resultsGeo[0].geometry.location.lat();
-              var lng = resultsGeo[0].geometry.location.lng();
-              //var pyrmont = new google.maps.LatLng(lat,lng);
+           
               var pyrmont = resultsGeo[0].geometry.location;
-              //var address = results[0].formatted_address;
-              //console.log(pyrmont);
-              //console.log(address);
-            //  bounds.extend(pyrmont);
+             
 
               // 位置座標のインスタンスを作成する
               map = new google.maps.Map(document.getElementById('map'), {
@@ -126,21 +107,15 @@
 
       function createMarker(latlng,icn,placename)
       {
-        // マーカー作成　　https://developers.google.com/maps/documentation/javascript/examples/marker-simple　参照
+       // マーカー作成 https://developers.google.com/maps/documentation/javascript/examples/marker-simple 参照
         var marker = new google.maps.Marker({
           position: latlng,
           map: map,
         });
 
-        //markerクリック時に場所の名前と緯度,経度を表示　2020.05.16
-        //吹き出しに緯度経度を表示
-        //var placename = place.name;
-        //console.log(placename);
-        //var latlngstring = latlng.toString();
-        //console.log(latdata);
-        //var contentString = placename+'<br/>'+ latlngstring;
+        
         var infowindow = new google.maps.InfoWindow({
-          //content: contentString
+          
           content: placename
         });
 
@@ -151,15 +126,12 @@
            currentInfoWindow.close();
          }
          map.setCenter(latlng);
-         //console.log(latlng);
+        
          infowindow.open(map,marker);
          currentInfoWindow = infowindow;
-         var latlngstring = latlng.toString();
-         //console.log(latlngstring);
+         
          document.getElementById('place').value=placename;
-         document.getElementById('lat').value=parseFloat(latlngstring.substring(1,latlngstring.indexOf(",")));
-         document.getElementById('lng').value=parseFloat(latlngstring.substring(latlngstring.indexOf(",")+2,latlngstring.indexOf(")")));
-         //console.log(latlngstring);
+        
          clickAddress(latlng);
        });
 
@@ -173,33 +145,21 @@
       geocoder.geocode(
         {location:latlng},function(res,sta){
           if(sta == google.maps.GeocoderStatus.OK){
-            //console.log(res[0]);
+           
             var address = res[0].address_components;//都道府県名
             var pref = address[address.length-3].long_name;
             document.getElementById('pref').value=pref;
-            // document.getElementById('lat').value=latlng.lat;
-            // document.getElementById('lng').value=latlng.lng;
-            //console.log(res[0]);
+           
             regionJudge(pref);
 
             var addressCity = res[0].formatted_address;//住所
             addressCity = addressCity.substring(addressCity.indexOf(pref));
             document.getElementById('address').value=addressCity;
-            //var addressCity = res[0].vicinity;
-            //console.log(addressCity);
-
-           //  var addressCity=[];
-           //  for(var i = address.length -3 ;i>=0;i--){
-           //    if(i==address.length-3){
-           //  console.log(address[i].long_name);
-           //  }else{
-           //    addressCity.push(address[i].long_name);
-           //  //}
-           // }
-            //.formatted_address;
+           
+            
           }
-          //console.log(address);
-        })
+          
+        });
 
       }
 
@@ -225,26 +185,21 @@
 
      function inputValueClear(){
        if(document.getElementById("keyword").value !== '' ||document.getElementById("keyword").value !==null){
-                document.getElementById("keyword").value = ''
+                document.getElementById("keyword").value = '';
          }
        if(document.getElementById("place").value !== '' ||document.getElementById("place").value !==null){
-                document.getElementById("place").value = ''
+                document.getElementById("place").value = '';
          }
        if(document.getElementById("pref").value !== '' ||document.getElementById("pref").value !==null){
-                document.getElementById("pref").value = ''
+                document.getElementById("pref").value = '';
          }
        if(document.getElementById("region").value !== '' ||document.getElementById("region").value !==null){
-                document.getElementById("region").value = ''
+                document.getElementById("region").value = '';
          }
        if(document.getElementById("address").value !== '' ||document.getElementById("address").value !==null){
-                document.getElementById("address").value = ''
+                document.getElementById("address").value = '';
          }
-       if(document.getElementById("lat").value !== '' ||document.getElementById("lat").value !==null){
-                document.getElementById("lat").value = ''
-         }
-       if(document.getElementById("lng").value !== '' ||document.getElementById("lng").value !==null){
-                document.getElementById("lng").value = ''
-         }
+     
      }
 
 
@@ -254,7 +209,7 @@
       var request = {
         location: pyrmont,
         radius: '1500',
-        type: ['book_store']　 // https://developers.google.com/places/supported_types 参照
+        type: ['book_store'] // https://developers.google.com/places/supported_types 参照
       };
       service = new google.maps.places.PlacesService(map);
       service.nearbySearch(request, callback);

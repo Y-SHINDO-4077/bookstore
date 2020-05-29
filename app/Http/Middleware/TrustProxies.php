@@ -30,7 +30,7 @@ class TrustProxies extends Middleware
     //    '192.168.1.1',
     //    '192.168.1.2',
     //];
-    protected $proxies = '**'; //常時https
+    protected $proxies = '**'; //常時httpsへ 2020.05.23
     
 
     /**

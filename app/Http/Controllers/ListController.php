@@ -15,4 +15,5 @@ class ListController extends Controller
     public function list(){
         return view('list.list');
     }
+   
 }

@@ -3,5 +3,6 @@
     "/css/admin.css": "/css/admin.css",
     "/css/app.css": "/css/app.css",
     "/js/js-googlemap.search.js": "/js/js-googlemap.search.js",
-    "/js/js-register.blade.js": "/js/js-register.blade.js"
+    "/js/js-register.blade.js": "/js/js-register.blade.js",
+    "/js/popper.js": "/js/popper.js"
 }

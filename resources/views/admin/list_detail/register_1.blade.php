@@ -9,7 +9,7 @@
      <div class="row">
     　<div class="mx-auto">
        <div class="col-md-10">
-             <h2>新規作成</h2>
+             <h2>新規作成 DB検証</h2>
        </div>
       
       <div id="map" style="height: 500px; width: 720px; margin: 2rem auto 0;"></div>
@@ -23,7 +23,7 @@
     </div>
         
     　　<!--<script src="{{ secure_asset('js/js-googlemap.search.js') }}" defer></script>-->
-    　<form method="POST" enctype="multipart/form-data" action="#">
+    　<form method="POST" enctype="multipart/form-data" action="{{action('Admin\ListController@create')}}">
     　    @if(count($errors)>0)
     　    <ul>
     　        @foreach($errors->all() as $e)

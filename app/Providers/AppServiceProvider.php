@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     
    
     public function boot(UrlGenerator $url)
-    {     //default HTTPS
+    {     //default HTTPS 2020.05.23
          \URL::forceScheme('https');
     }
 //}

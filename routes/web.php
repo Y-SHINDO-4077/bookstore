@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin'],function(){
    Route::get('home','Admin\ListController@index')->middleware('auth'); 
    Route::get('/about','Admin\ListController@about')->middleware('auth'); 
    Route::get('/list','Admin\ListController@list')->middleware('auth'); 
+   Route::post('/list_detail/register','Admin\ListController@create')->middleware('auth');  //2020.05.28
 });
 Auth::routes();
 
