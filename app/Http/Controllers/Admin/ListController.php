@@ -5,18 +5,24 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Auth;
+
 //2020.05.28
 use App\Bookstores; 
-use App\BookstoreHistory;
+use App\BookstoreHistories;
 use Carbon\Carbon;  
 use App\User;
+
+//2020.06.01 コメントtable
+use App\Comments;
+use App\Commenthistories;
 
 class ListController extends Controller
 {  
     /*新規登録画面へ遷移*/
     public function add()
     {
-      return view('admin.list_detail.register_1');    
+      return view('admin.list_detail.register');    
     }
     
     /*新規登録画面で入力した内容を保存 */
@@ -33,14 +39,16 @@ class ListController extends Controller
       $bs->pref=$request->input('pref');
       $bs->address=$request->input('address');
       
-      if (isset($form['image'])) {
+      if ($request->file('image') !=null ) {
         $path = $request->file('image')->store('public/image');
         $bs->image_path = basename($path);
       } else {
           $bs->image_path = null;
       }
+      //ログイン中のユーザーIDを取得 2020.06.01
+      $bs->user_id=Auth::id();
       
-      $bs->user_id='1';
+        
       
       // フォームから送信されてきた_tokenを削除する
       unset($bs['_token']);
@@ -48,15 +56,57 @@ class ListController extends Controller
       unset($bs['image']);
       
       $bs->save();
-      
+      //保存した最新のbookstoreidを取得する 2020.06.01
+      $last_insert_id = $bs->id;
+      //var_dump($last_insert_id);
+      //本屋履歴にデータ保存する 2020/06/01
       $bsh= new BookstoreHistories;
-      $bsh->bookstore_id = $request->input('id');
+      $bsh->bookstore_id = $last_insert_id;
+      $bsh->name=$request->input('name');
+      $bsh->region=$request->input('region');
+      $bsh->pref=$request->input('pref');
+      $bsh->address=$request->input('address');
+      
+      if (isset($form['image'])) {
+        $path = $request->file('image')->store('public/image');
+        $bsh->image_path = basename($path);
+      } else {
+          $bsh->image_path = null;
+      }
+      //ログイン中のユーザーIDを取得 2020.06.01
+      $bsh->user_id=Auth::id();
+      // フォームから送信されてきた_tokenを削除する
+      unset($bsh['_token']);
+      // フォームから送信されてきたimageを削除する
+      unset($bsh['image']);
     
       $bsh->edited_at = Carbon::now();
       $bsh->save();
-
-      return redirect('admin/list_detail/register');
-      //return redirect('admin/list');
+      
+      //comments tableに値を挿入 2020.06.01
+      $cm=new Comments;
+      $cm->store_id =$last_insert_id;
+      $cm->handdle_name = $request->input('handdle_name');
+      $cm->comment = $request->input('comment');
+      $cm->user_id = Auth::id();
+      
+      $cm->save();
+      //comments.idを取得 2020.06.01
+      $cm_last_insert_id = $cm->id;
+      
+      $cmh = new Commenthistories;
+      $cmh->store_id = $last_insert_id;
+      $cmh->comment_id = $cm_last_insert_id;
+      $cmh->user_id = Auth::id();
+      $cmh->handdle_name = $request->input('handdle_name');
+      $cmh->comments = $request->input('comment');
+      $cmh->edited_at = Carbon::now();
+      
+      $cmh->save();
+      
+      //return redirect('admin/list_detail/register');
+      //登録完了後、ログイン一覧画面へ遷移,登録しました。のメッセージを表示する
+      return redirect('admin/list')->with('message','登録しました。');
     }
     
     /*ログイン後、ログイン後のトップ画面に遷移 2020.05.17*/
@@ -68,8 +118,79 @@ class ListController extends Controller
       return view('admin.about');
     }
     /*ログイン後、ログイン後のlist画面に遷移 2020.05.20 */
-    public function list(){
-      return view('admin.list');
+    public function list(Request $request){
+       $name = $request->name;
+      $region = $request->region;
+      if(($region !='' && $name != '')||($region !=null && $name != null)){
+          $bookstores = Bookstores::where('region',$region)->where('name','LIKE',"%$name%")->orderBy('created_at','DESC')->paginate(12);
+      }
+      else if($region != '' || $region != null){
+          $bookstores = Bookstores::where('region',$region)->orderBy('created_at','DESC')->paginate(12);
+      }else if($name != '' || $name !=null){
+         $bookstores = Bookstores::where('name','LIKE',"%$name%")->orderBy('created_at','DESC')->paginate(12);
+      }else{
+        $bookstores = Bookstores::orderBy('created_at','DESC')->paginate(12);  
+      }
+      return view('admin.list',['bookstores'=>$bookstores,'name'=>$name,'region'=>$region]);
     }
     
+     /*2020.05.29  xml読み込み*/
+   public function sqlToXML(){
+       $results = Bookstores::all();
+       
+       //var_dump($results);
+       return response()->view('admin.sqlToXML',['results' => $results ])->header("Content-type","text/xml");
+       //return view('list.sqlToXML',['results' => $results ]);
+   }
+   
+   /*2020.06.05 詳細画面へ遷移*/
+   public function detail(Request $request){
+       $id = $request->id;
+       $bs = Bookstores::where('id',$id)->first();
+       $cm = Comments::where('store_id',$id)->get();
+       return view('admin.list_detail.detail_comment',['bs'=>$bs,'cm'=>$cm]);
+   }
+   
+   /*2020.06.05 コメント詳細画面でコメントを新規登録する*/
+  public function commentInsert(Request $request)
+    {
+      $this->validate($request, Comments::$rules);
+     
+      
+      //現在表示されているページのbookstoreidを取得する 2020.06.05
+     // $id = $request->id;
+      //$bs = Bookstores::where('id',$id)->first();
+      //$last_insert_id = $bs->id;
+     
+      
+      
+      //comments tableに値を挿入 2020.06.05
+      $cm = new Comments;
+      $cm->store_id = $request->input('store_id');
+      $cm->handdle_name = $request->input('handdle_name');
+      $cm->comment = $request->input('comment');
+      $cm->user_id = Auth::id();
+      
+      // フォームから送信されてきた_tokenを削除する
+      unset($cm['_token']);
+      
+      $cm->save();
+      //comments.idを取得 2020.06.05
+      $cm_last_insert_id = $cm->id;
+      $cm_store_id = $cm->store_id;
+      
+      
+      $cmh = new Commenthistories;
+      $cmh->store_id = $cm_store_id;
+      $cmh->comment_id = $cm_last_insert_id;
+      $cmh->user_id = Auth::id();
+      $cmh->handdle_name = $request->input('handdle_name');
+      $cmh->comments = $request->input('comment');
+      $cmh->edited_at = Carbon::now();
+      
+      $cmh->save();
+      //登録完了後、ログイン一覧画面へ遷移、コメント登録しましたフラッシュメッセージを表示
+      return redirect('admin/list')->with('message','コメント登録しました。');
+    }
+   
 }

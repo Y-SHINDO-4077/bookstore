@@ -22,13 +22,23 @@
     <div id="map" style="height: 500px; width: 50%; margin: 2rem auto 0;"></div>
 
     <!--検索窓-->
-    <div style="text-align:center;">
-      <input type="text" id="keyword">
-      <button type="button" id="search">検索</button>
-      <a id="init"><span style="color:blue;cursor:pointer;">地図の状態を初期化</span></a>
-      <a id="clear"><span style="color:blue;cursor:pointer;">入力内容削除</span></a>
-    </div>
+    <!--<div style="text-align:center;">-->
+    <!--  <input type="text" id="keyword">-->
+    <!--  <button type="button" id="search">検索</button>-->
+    <!--  <a id="init"><span style="color:blue;cursor:pointer;">地図の状態を初期化</span></a>-->
+    <!--  <a id="clear"><span style="color:blue;cursor:pointer;">入力内容削除</span></a>-->
+    <!--</div>-->
 
+　　<div class="col-md-12" style="text-align:center;">
+      <div class="form-group">
+        <input type="text" class="col-md-5 form-control" class="form-control" id="keyword">
+        <button type="button" id="search" class="btn btn-outline-secondary">検索</button>
+      </div>
+      <button id="init" class="btn btn-outline-success"><span style="color:blue;cursor:pointer;">地図の状態を初期化</span></a>
+      <button id="clear" class="btn btn-outline-info"><span style="color:blue;cursor:pointer;">入力内容削除</span></a>
+    </div>
+    
+    
    <form method="POST" enctype="multipart/form-data" action="databaseInsert.php">
     <!--情報をセット -->
     <div style="text-align:center;flex-direction:column;">

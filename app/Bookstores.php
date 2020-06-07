@@ -18,11 +18,12 @@ class Bookstores extends Model
         );
     //bookstorehistoryとの連携    
     public function bookstorehistories (){
-        return $this->hasMany('App\BookstoreHistory');
+        return $this->hasMany('App\BookstoreHistores');
     }
     //usersとの連携
     public function users(){
         return $this->belongsTo('App\User');
     }
+    
 }
 

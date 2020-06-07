@@ -15,15 +15,17 @@
       <div id="map" style="height: 500px; width: 720px; margin: 2rem auto 0;"></div>
 
     <!--検索窓-->
-    <div style="text-align:center;">
-      <input type="text" id="keyword">
-      <button type="button" id="search">検索</button>
-      <button id="init"><span style="color:blue;cursor:pointer;">地図の状態を初期化</span></a>
-      <button id="clear"><span style="color:blue;cursor:pointer;">入力内容削除</span></a>
+    <div class="col-md-12" style="text-align:center;">
+      <div class="form-group form-inline">
+          <input type="text" class="col-md-5 form-control" class="form-control" id="keyword">
+          <button type="button" id="search" class="btn btn-outline-secondary">検索</button>
+          <button id="init" class="btn btn-outline-success"><span style="color:blue;cursor:pointer;">地図の状態を初期化</span></a>
+      <button id="clear" class="btn btn-outline-info"><span style="color:blue;cursor:pointer;">入力内容削除</span></a>
+      </div>
     </div>
         
-    　　<!--<script src="{{ secure_asset('js/js-googlemap.search.js') }}" defer></script>-->
-    　<form method="POST" enctype="multipart/form-data" action="#">
+      <label class="col-form-label"><span style="color:red"> * </span>は必須項目です。</label>  
+    　<form method="POST" enctype="multipart/form-data" action="{{action('Admin\ListController@create')}}">
     　    @if(count($errors)>0)
     　    <ul>
     　        @foreach($errors->all() as $e)
@@ -63,22 +65,22 @@
          
          <!--画像選択 -->
          <div class="col-md-10  form-group">
-             <button type="file" class="btn btn-secondary">選択</button>
-             <label class="col-form-label">画像を選択</label>
-         
+             <lavel class="col-form-label" for="image">画像</lavel>
+             <input type="file" class="form-control-file" name="image">
          </div>
          
+         
          <!--ハンドルネーム-->
-     <!--     <div class="col-md-10 form-group">-->
-     <!--       <label class="col-form-label" for="inputDefaultHandle">ハンドルネーム</label>-->
-     <!--       <input type="text" class="form-control" placeholder="ハンドルネームを入力してください" id="inputDefaultHandle">-->
-     <!--     </div>   -->
+          <div class="col-md-10 form-group">
+            <label class="col-form-label" for="inputDefaultHandle">ハンドルネーム<span style="color:red"> * </span></label>
+            <input type="text" class="form-control" placeholder="ハンドルネームを入力してください" id="handle_name" name="handdle_name">
+          </div>   
           
-          <!--お気に入りコメント -->
-     <!--     <div class="col-md-10 form-group">-->
-     <!--       <label class="col-form-label col-form-label-lg" for="inputDefaultComment">お気に入りコメント</label>-->
-  　　　<!--　　　<input class="form-control form-control-lg" type="text" placeholder=".form-control-lg" id="inputLrcge">-->
-　　　　　<!--</div>-->
+          <!--お気に入りコメント--> 
+          <div class="col-md-10 form-group">
+            <label class="col-form-label col-form-label-lg" for="inputDefaultComment">お気に入りコメント<span style="color:red"> * </span></label>
+            <input class="form-control form-control-lg" type="text" placeholder="コメントを入力してください" id="comment" name="comment">
+　　　　　</div>
 　　　　　
 　　　　　<div class="col-md-10 form-group">
 　　　　　    {{ csrf_field()}}
@@ -93,7 +95,7 @@
  </div>
 @endsection
 @section('footer')
-<!--google map api -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+<!-- google map api --> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
 <script async defer type="text/javascript" src="{{asset('js/js-googlemap.search.js')}}"></script>
 @endsection

@@ -23,9 +23,9 @@
       </style>
          
          <title>@yield('title')</title>
-         
+       
          <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-         
+          
           
          
          <script src="{{ secure_asset('js/app.js') }}" defer></script>
@@ -36,6 +36,7 @@
          
          <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
          <!--<link href="{{ secure_asset('css/admin.css') }}" rel="stylesheet">-->
+         
      </head>    
      <body>
          <div id="app">
@@ -89,9 +90,17 @@
             <!--navigation bar--> 
              
              <main class="py-4">
+                 <div class="container py-4">
+        {{-- フラッシュメッセージの表示 --}}
+        @if (session('message'))
+            <div class="alert alert-success">{{ session('message') }}</div>
+        @endif
+        　　　</div>
+ 
+       
                  @yield('content')
              </main>
          </div>
-          @yield('footer')
+           @yield('footer')
      </body>
 </html>

@@ -35,7 +35,7 @@
                     switch(error.code) {
                       case 1: // PERMISSION_DENIED
                         alert("位置情報の利用が許可されていません");
-                       // 緯度・経度を変数に格納
+                       // 緯度・経度を変数に格納(東京駅)
                    　　　var pyrmont = new google.maps.LatLng(35.681236,139.767125);
                        // マップオブジェクト作成
                     　　　　map = new google.maps.Map(document.getElementById('map'), // マップを表示する要素
@@ -47,7 +47,7 @@
                         break;
                       case 2: // POSITION_UNAVAILABLE
                         alert("現在位置が取得できませんでした");
-                          // 緯度・経度を変数に格納
+                          // 緯度・経度を変数に格納（東京駅）
                    　　　var pyrmont = new google.maps.LatLng(35.681236,139.767125);
                     　　　　// マップオブジ���クト作成
                     　　　　map = new google.maps.Map(document.getElementById('map'), // マップを表示する要素
