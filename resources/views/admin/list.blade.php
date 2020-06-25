@@ -81,7 +81,7 @@
     <!-- jqueryの読み込む -->
     <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- google map api -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
     
     <script type="text/javascript">
      var currentInfoWindow = null; //インフォウィンドウの初期値
