@@ -16,6 +16,8 @@
 
        <div class="flex-column">
          <div class="align-items-center">  
+         <!--IDをhiddenで取得、ajax通信で該当するidのみを読み込む -->
+         <input type="hidden" id="store_id" value="{{$bs->id}}">
          <!--場所-->
          <div class="col-md-10">
             <label class="col-form-label">場所</label>
@@ -85,8 +87,9 @@
 　　　　　
 　　　　　
 　　　　　</div>
-　　　　　
-          <button type="button" class="btn btn-secondary"><a href="{{ action('ListController@list') }}" style="color:white">戻る</a></button>
+　　　　　<div class="col-md-10">
+          <button type="button" class="btn btn-secondary float-right"><a href="{{ action('ListController@list') }}" style="color:white">戻る</a></button>
+          </div>
        </div>
  
       
@@ -94,4 +97,103 @@
       </div> 
   </div>
  
+@endsection
+@section('footer')
+    <!-- jqueryの読み込む -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- google map api -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+    <script type="text/javascript">
+    var currentInfoWindow = null; //インフォウィンドウの初期値
+    var id =document.getElementById('store_id').value;
+$(function(){
+  //XMLファイル読み込む
+  $.ajax({
+     headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+    url:"../sqlToXML",
+    type:"get",
+    cache:false,
+    dataType:"xml"
+  })
+    .done(function(xml){
+       var data=xmlRequest(xml);
+       initialize(data);
+     })
+     .fail(function(XMLHttpRequest,textStatus,errorThrown){
+       alert('fail');
+       console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+　　    console.log("textStatus     : " + textStatus);
+　　    console.log("errorThrown    : " + errorThrown.message);
+      })
+   });
+
+//XMLファイル読み込み
+function xmlRequest(xml){
+  var data = [];
+  $(xml).find("markers > marker").each(function(){
+    var dat={};
+    dat.id = this.getAttribute('id');
+    dat.name = this.getAttribute('name');
+    dat.address = this.getAttribute('address');
+    dat.pref = this.getAttribute('pref');
+    dat.region = this.getAttribute('region');
+    $(this).children().each(function(){
+      if(this.childNodes.length>0)dat[this.tagName]
+      =this.childNodes[0].nodeValue;
+    });
+    if(dat.id==id){
+    data.push(dat);
+  }
+  });
+ 
+  return data;
+}
+
+function initialize(data){
+  var name=data[0].name;
+  var address = data[0].address;
+  var pref =data[0].pref;
+  var region =data[0].region;
+  var iw=new google.maps.InfoWindow({content:name});
+
+  // ジオコーダのコンストラクタ
+  var geocoder = new google.maps.Geocoder();
+  //console.log(geocoder);
+  geocoder.geocode({address:address},function(results,status){
+    if(status==google.maps.GeocoderStatus.OK){
+
+      var lat = results[0].geometry.location.lat();
+      lat = parseFloat(lat);
+      var lng = results[0].geometry.location.lng();
+      lng = parseFloat(lng);
+    var latlng = new google.maps.LatLng(lat,lng);
+    var map = new google.maps.Map(document.getElementById("map"),{
+      zoom:15,
+      center:latlng,
+    });
+  var marker = new google.maps.Marker({
+    position:latlng,
+    map:map,
+  });
+
+  marker.addListener('click',
+  function(){
+  if(currentInfoWindow){
+    currentInfoWindow.close();
+  }
+
+  map.setCenter(latlng);
+  iw.open(map,marker);
+  currentInfoWindow = iw;
+  document.getElementById("place").innerHTML=name;
+  document.getElementById("address").innerHTML=address;
+  document.getElementById("pref").innerHTML=pref;
+  document.getElementById("region").innerHTML=region;
+    });
+   }
+  });
+}
+</script>
 @endsection

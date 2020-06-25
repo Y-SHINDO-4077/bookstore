@@ -14,7 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        // 'guard' => 'web',//2020.06.13 管理画面とユーザー画面を分ける
+        'guard' => 'user',
         'passwords' => 'users',
     ],
 
@@ -34,17 +35,27 @@ return [
     | Supported: "session", "token"
     |
     */
+    /*2020.06.13 管理者画面とユーザー画面の分離*/
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
+        ],
+        
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
 
@@ -64,11 +75,15 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
+    /*2020.06.13 管理者画面とユーザー画面の分離*/
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
 
         // 'users' => [
@@ -91,10 +106,16 @@ return [
     | they have less time to be guessed. You may change this as needed.
     |
     */
+      /*2020.06.13 管理者画面とユーザー画面の分離*/
 
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+         'admins' => [
+            'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,
         ],

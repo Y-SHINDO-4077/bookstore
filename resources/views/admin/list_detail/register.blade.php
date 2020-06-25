@@ -26,13 +26,11 @@
         
       <label class="col-form-label"><span style="color:red"> * </span>は必須項目です。</label>  
     　<form method="POST" enctype="multipart/form-data" action="{{action('Admin\ListController@create')}}">
-    　    @if(count($errors)>0)
-    　    <ul>
-    　        @foreach($errors->all() as $e)
-    　        <li>{{$e}}</li>
-    　        @endforeach
-    　    </ul>
-    　   @endif
+    　   @if(count($errors)>0)
+    　        @foreach($errors->all() as $message)
+              <p class="bg-danger">{{ $message }}</p>
+             @endforeach
+    　        @endif
        <div class="flex-column">
          <div class="align-items-center">  
          <!--場所-->
@@ -72,22 +70,25 @@
          
          <!--ハンドルネーム-->
           <div class="col-md-10 form-group">
-            <label class="col-form-label" for="inputDefaultHandle">ハンドルネーム<span style="color:red"> * </span></label>
+            <label class="col-form-label" for="inputDefaultHandle">ハンドルネーム</label>
             <input type="text" class="form-control" placeholder="ハンドルネームを入力してください" id="handle_name" name="handdle_name">
           </div>   
           
           <!--お気に入りコメント--> 
           <div class="col-md-10 form-group">
-            <label class="col-form-label col-form-label-lg" for="inputDefaultComment">お気に入りコメント<span style="color:red"> * </span></label>
+            <label class="col-form-label col-form-label-lg" for="inputDefaultComment">お気に入りコメント</label>
             <input class="form-control form-control-lg" type="text" placeholder="コメントを入力してください" id="comment" name="comment">
 　　　　　</div>
 　　　　　
 　　　　　<div class="col-md-10 form-group">
 　　　　　    {{ csrf_field()}}
-　　　　   　<button type="submit" class="btn btn-primary">登録</button>
+　　　　   　<button type="submit" class="btn btn-primary float-left">登録</button>
 　　　　　</div>
 　　　　　
-         </div>   
+         </div> 
+         <div class="col-md-10 form-group">
+         <button type="button" class="btn btn-secondary float-right"><a href="{{ action('Admin\ListController@list') }}" style="color:white">戻る</a></button>
+         </div>
        </div>
       </form> 
       </div> 
@@ -96,6 +97,6 @@
 @endsection
 @section('footer')
 <!-- google map api --> 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
-<script async defer type="text/javascript" src="{{asset('js/js-googlemap.search.js')}}"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+<script defer type="text/javascript" src="{{asset('js/js-googlemap.search.js')}}"></script>
 @endsection

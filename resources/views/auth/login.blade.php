@@ -1,9 +1,17 @@
-@extends('layouts.admin')
+@extends('layouts.front')
+
+@section('title','ログイン')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            {{--フラッシュメッセージ表示--}}
+            @if(session('warning'))
+               <div class="alert alert-primary">
+                   {{session('warning')}}
+               </div>
+            @endif
             <div class="card">
                 <div class="card-header">ログイン</div>
 
@@ -30,7 +38,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                                <p>パスワードは半角英数字8文字以上です。</p>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -66,6 +74,10 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <!--2020.06.12 管理者画面へのリンク -->
+            <div class="col-md-8 pull-right">
+                <a class="btn btn-link" href ="{{route('admin.login')}}">管理者画面</a>
             </div>
         </div>
     </div>

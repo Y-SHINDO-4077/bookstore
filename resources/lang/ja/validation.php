@@ -235,5 +235,11 @@ return [
     'attributes' => [
          'email' => 'メールアドレス',
          'password' => 'パスワード',
+         'name' => '場所名',
+         'region' => '地域名',
+         'pref' => '都道府県名',
+         'address' => '住所',
+         'handdle_name' => 'ハンドルネーム',
+         'comment' =>'お気に入りコメント',
         ],
 ];

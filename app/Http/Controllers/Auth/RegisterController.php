@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use Illuminate\Http\Request;//2020.06.21 仮登録確認画面へ遷移のために追加
+use App\Mail\EmailVerification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Auth\Events\Registered;
+
+//2020.06.24 セッションにメール情報を入れる
+use Session;
+//現在日時の設定 2020.06.25
+use Carbon\Carbon;
+
 class RegisterController extends Controller
 {
     /*
@@ -29,6 +39,8 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    
+    //protected $redirectTo = '/admin/home';
 
     /**
      * Create a new controller instance.
@@ -54,6 +66,19 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
+    
+    //新規登録画面で登録クリック後、確認画面へ遷移 2020.06.21
+    public function pre_check(Request $request){
+        $this->validator($request->all())->validate();
+        
+        $request->flashOnly('email');
+        $bridge_request = $request->all();
+        
+        //passwordマスキング
+        $bridge_request['password_mask'] = '********';
+        
+        return view('auth.register_check')->with($bridge_request);
+    }
 
     /**
      * Create a new user instance after a valid registration.
@@ -63,10 +88,37 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $date = Carbon::now();
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'sent_at' => $date->toDateTimeString(),
         ]);
+        
+        // $user = User::create([
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        //     'email_verify_token' => base64_encode($data['email']),
+        // ]);
+            
+        // $email = new EmailVerification($user);
+        // Mail::to($user->email)->send($email);
+        
+        // return $user;
+    }
+    
+    
+    public function register(Request $request)
+    {
+        event(new Registered($user = $this->create( $request->all() )));
+        //再送メール用にセッションに情報を保存
+        if($request->email){
+            $email =$request->email;
+            Session::put('email',$email);
+        }
+        //var_dump($email);
+        return view('auth.pre_registered',compact('email'));
     }
 }

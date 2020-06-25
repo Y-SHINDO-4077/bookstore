@@ -19,7 +19,7 @@ return [
     // 'token' => 'This password reset token is invalid.',
     // 'user' => "We can't find a user with that e-mail address.",
     
-    'password' => 'パスワードは6文字以上にして、確認用入力欄と一致させてください。',
+    'password' => 'パスワードは8文字以上にして、確認用入力欄と一致させてください。',
     'reset' => 'パスワードは再設定されました！',
     'sent' => 'パスワード再設定用のURLをメールで送りました。',
     'token' => 'パスワード再設定用のトークンが不正です。',

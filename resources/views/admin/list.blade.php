@@ -39,24 +39,29 @@
    <div class="row">
     <div class="col-md-12 d-flex justify-content-around flex-wrap">
         @foreach($bookstores as $bs)
-          <div class="card border-light col-lg-4 mx-3 my-3" style="max-width: 20rem; max-height:20rem; text-align:center;">
+          <div class="card border-light col-lg-4 mx-3 my-3" style="max-width: 20rem; max-height:45rem; text-align:center;">
              <div class="card-header">{{$bs->name}}</div>
               
                   @if($bs->image_path != null)
-                  <img class="card-img mx-auto" src="{{ asset('/storage/image/'.$bs->image_path) }}" style="width:40%;height:40%;">
-                  <div class="card-body" style="position:relative;">
-                     <div class="card-img-overlay"> 
-                     <p class="card-text" style="position:absolute; font-size:12px;">{{$bs->address}}</p>
-                     </div>
-                  </div> 
-                  @else
-                  <div class="card-body">
-                   <p class="card-text">{{$bs->address}}</p>
-                  </div> 
-                  @endif
-               
+            <img class="card-img mx-auto" src="{{ asset('/storage/image/'.$bs->image_path) }}" style="width:40%;height:40%;display:clock;">
+            <div class="card-body" style="position:relative;">
+              <div class="card-img-overlay"> 
+                <p class="card-text" style="position:absolute; top:10px;">{{$bs->address}}</p>
+              </div>
+            </div> 
+            @else
+            <div class="card-body">
+              <p class="card-text">{{$bs->address}}</p>
+            </div> 
+            @endif
+             <div class="list-group list-group-flush">
+             コメント数:{{$count[$bs->id]}}
+              </div>  
+             
                
              <div class="card-footer">
+                 <!--<button type="button" class="btn btn-info">本屋情報編集</button>-->
+                <!--<button type="button" class="btn btn-warning"><a href="{{ action('Admin\ListController@detail',['id'=>$bs->id]) }}" style="color:white">コメント追加</a></button>-->
                 <button type="button" class="btn btn-info"><a href="{{ action('Admin\ListController@detail',['id'=>$bs->id]) }}" style="color:white">詳細</a></button>
               </div>
           </div>
@@ -74,9 +79,9 @@
 @endsection 
 @section('footer')
     <!-- jqueryの読み込む -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- google map api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
     
     <script type="text/javascript">
      var currentInfoWindow = null; //インフォウィンドウの初期値
@@ -124,10 +129,8 @@ function xmlRequest(xml){
   return data;
 }
 
-//Attach Message
 
 function createMarker(map,name,address,pref,region,iw){
-  //
   // ジオコーダのコンストラクタ
   var geocoder = new google.maps.Geocoder();
   
@@ -163,15 +166,25 @@ function createMarker(map,name,address,pref,region,iw){
     currentInfoWindow = iw;
 
     });
-   }
+   }else if(status =="OVER_QUERY_LIMIT") {
+       //status =="OVER_LIMIT_QUERY"対策用、setTimeoutを用いて遅延して関数を読み出す 2020.06.10
+       setTimeout(function () {
+                       //再帰的に200ミリ秒後createMarker関数を呼び出す
+                       createMarker(map,name,address,pref,region,iw);
+                   }, 200);
+        //alert('Geocode was not successful for the following reason: ' + status);
+ }
+ else{
+    alert('Geocode was not successful for the following reason: ' + status); 
+ }
   });
  }
 
 
 function initialize(data){
   var map = new google.maps.Map(document.getElementById("map"),{
-    zoom:6,
-    center:new google.maps.LatLng(35.029613,135.77244),//京阪電鉄出町柳駅
+    zoom:5,
+    center:new google.maps.LatLng(37.098403,137.985031),//糸魚川市
    
   });
   if(data != null){
