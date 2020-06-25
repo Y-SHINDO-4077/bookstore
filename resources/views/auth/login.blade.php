@@ -77,7 +77,7 @@
             </div>
             <!--2020.06.12 管理者画面へのリンク -->
             <div class="col-md-8 pull-right">
-                <a class="btn btn-link" href ="{{route('admin.login')}}">管理者画面</a>
+                <!--<a class="btn btn-link" href ="{{route('admin.login')}}">管理者画面</a>-->
             </div>
         </div>
     </div>
