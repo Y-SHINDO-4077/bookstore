@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commenthistories extends Model
 {
-    protected $table = 'bookstore.commenthistories';
+    //protected $table = 'bookstore.commenthistories';
     
     protected $guarded = array('id');
     

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bookstores extends Model
 {   
-    protected $table ='bookstore.bookstores';
+    //protected $table ='bookstore.bookstores';
     
     protected $guarded =array('id');
     

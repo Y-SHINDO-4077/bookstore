@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BookstoreHistories extends Model
 {   
-    protected $table ='bookstore.bookstorehistories';
+    //protected $table ='bookstore.bookstorehistories';
     protected $guarded =array('id');
     
     public static $rules= array(
