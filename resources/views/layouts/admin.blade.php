@@ -92,6 +92,15 @@
        
                  @yield('content')
              </main>
+             
+         <footer>
+            <div class="col-md-12">
+            <hr class="col-md-10 bg-primary" style="border-size:1px; border-style:solid;">
+            <div class="col-md-11 text-right">
+             <a href="https://www.dooshin.net" target="_blank">本ページのお問い合わせはリンク先のContactへ</a>
+            </div>
+            </div>
+         </footer>
          </div>
            @yield('footer')
      </body>
