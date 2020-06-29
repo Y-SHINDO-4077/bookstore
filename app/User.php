@@ -14,7 +14,8 @@ use Illuminate\Auth\MustVerifyEmail;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Notifications\ResetPassword;
-use App\Notifications\VerifyEmailJa;
+use App\Notifications\VerifyEmailJa;//vendor対策用2020.06.30
+use App\Notifications\JaPasswordReset;//vendor対策用2020.06.30;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
@@ -64,7 +65,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
     }
     //2020.06.22 パスワード再確認用
     public function sendPasswordResetNotification($token){
-        $this->notify(new ResetPassword($token));
+        //$this->notify(new ResetPassword($token));
+        $this->notify(new JaPasswordReset($token));
     }
 }
 
