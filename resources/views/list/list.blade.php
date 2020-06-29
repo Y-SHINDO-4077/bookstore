@@ -43,8 +43,8 @@
              </div>
               
             @if($bs->image_path != null)
-            <img class="card-img mx-auto" src="{{ asset('/storage/image/'.$bs->image_path) }}" style="width:25%;height:25%;">
-            <!--<img class="card-img mx-auto" src="{{ $bs->image_path }}" style="width:25%;height:25%;">-->
+            <!--<img class="card-img mx-auto" src="{{ asset('/storage/image/'.$bs->image_path) }}" style="width:25%;height:25%;">-->
+            <img class="card-img mx-auto" src="{{ $bs->image_path }}" style="width:25%;height:25%;">
             <div class="card-body" style="position:relative;">
               <!--<div class="card-img-overlay"> -->
                 <p class="card-text" style="position:absolute; top:5px; left:10px font-size:11px;">{{$bs->address}}</p>

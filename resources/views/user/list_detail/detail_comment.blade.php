@@ -51,7 +51,7 @@
              <lavel class="col-form-label" for="image">画像</lavel>
              <div class="col-md-8 ml-auto">
              @if($bs->image_path != null)
-             <img src="{{ asset('storage/image/' . $bs->image_path) }}" alt="image_path" style="width:50%;height:50%;">
+             <!--<img src="{{ asset('storage/image/' . $bs->image_path) }}" alt="image_path" style="width:50%;height:50%;">-->
              <img src="{{$bs->image_path}}" alt="image_path" style="width:50%;height:50%;">
              @endif
              </div>
