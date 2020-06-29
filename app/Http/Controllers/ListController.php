@@ -28,7 +28,7 @@ class ListController extends Controller
       $count = [];
       for($i=0;$i<count($bs_id);$i++){
           //print implode($bs_id[$i]);
-          $cmt = Comments::select(['bookstore.comments.store_id'])->Join('bookstore.bookstores','bookstore.comments.store_id','=','bookstore.bookstores.id')->groupBy('bookstore.comments.store_id')->having('bookstore.comments.store_id','=',$bs_id[$i])->count();
+          $cmt = Comments::select(['comments.store_id'])->Join('bookstores','comments.store_id','=','bookstores.id')->groupBy('comments.store_id')->having('comments.store_id','=',$bs_id[$i])->count();
          //$cnt=$cmt->count();
          //dd($cmt->toArray());
          //var_dump($cnt);
@@ -45,7 +45,7 @@ class ListController extends Controller
       $count = [];
       for($i=0;$i<count($bs_id);$i++){
           //print implode($bs_id[$i]);
-          $cmt = Comments::select(['bookstore.comments.store_id'])->Join('bookstore.bookstores','bookstore.comments.store_id','=','bookstore.bookstores.id')->groupBy('bookstore.comments.store_id')->having('bookstore.comments.store_id','=',$bs_id[$i])->count();
+          $cmt = Comments::select(['comments.store_id'])->Join('bookstores','comments.store_id','=','bookstores.id')->groupBy('comments.store_id')->having('comments.store_id','=',$bs_id[$i])->count();
          //$cnt=$cmt->count();
          //dd($cmt->toArray());
          //var_dump($cnt);
@@ -61,7 +61,7 @@ class ListController extends Controller
       $count = [];
       for($i=0;$i<count($bs_id);$i++){
           //print implode($bs_id[$i]);
-          $cmt = Comments::select(['bookstore.comments.store_id'])->Join('bookstore.bookstores','bookstore.comments.store_id','=','bookstore.bookstores.id')->groupBy('bookstore.comments.store_id')->having('bookstore.comments.store_id','=',$bs_id[$i])->count();
+          $cmt = Comments::select(['comments.store_id'])->Join('bookstores','comments.store_id','=','bookstores.id')->groupBy('comments.store_id')->having('comments.store_id','=',$bs_id[$i])->count();
          //$cnt=$cmt->count();
          //dd($cmt->toArray());
          //var_dump($cnt);
@@ -77,7 +77,7 @@ class ListController extends Controller
       $count = [];
       for($i=0;$i<count($bs_id);$i++){
           //print implode($bs_id[$i]);
-          $cmt = Comments::select(['bookstore.comments.store_id'])->Join('bookstore.bookstores','bookstore.comments.store_id','=','bookstore.bookstores.id')->groupBy('bookstore.comments.store_id')->having('bookstore.comments.store_id','=',$bs_id[$i])->count();
+          $cmt = Comments::select(['comments.store_id'])->Join('bookstores','comments.store_id','=','bookstores.id')->groupBy('comments.store_id')->having('comments.store_id','=',$bs_id[$i])->count();
          //$cnt=$cmt->count();
          //dd($cmt->toArray());
          //var_dump($cnt);
