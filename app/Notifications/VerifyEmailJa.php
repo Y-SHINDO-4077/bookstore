@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Config;
 
 
 class VerifyEmailJa extends Notification
@@ -47,13 +48,12 @@ class VerifyEmailJa extends Notification
         }
 
         return (new MailMessage)
-            ->subject(Lang::getFromJson('本登録メール'))
+            ->subject(Lang::getFromJson('本登録'))
             ->line(Lang::getFromJson('以下の認証リンクをクリックして本登録を完了させてください。'))
-            ->action(
-                Lang::getFromJson('メールアドレスを認証する'),
-                $this->verificationUrl($notifiable)
-            )
+            ->action(Lang::getFromJson('メールアドレスを認証する'), $this->verificationUrl($notifiable))//$verificationUrl)
+            ->line('このリンクの有効期限は60分です。')
             ->line(Lang::getFromJson('もしこのメールに覚えが無い場合は破棄してください。'));
+            
     }
 
     /**
@@ -65,7 +65,11 @@ class VerifyEmailJa extends Notification
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]
+            //'verification.verify', //遷移先を変更する2020.06.22
+            'auth.verify_main',
+            //Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+             Carbon::now()->addMinutes(60),
+            ['id' => $notifiable->getKey()]
         );
     }
 

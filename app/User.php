@@ -14,6 +14,7 @@ use Illuminate\Auth\MustVerifyEmail;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\VerifyEmailJa;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
@@ -58,7 +59,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
     
     //2020.06.22 新規登録用
     public function sendEmailVerificationNotification(){
-        $this->notify(new VerifyEmail);
+        //$this->notify(new VerifyEmail);
+        $this->notify(new VerifyEmailJa);
     }
     //2020.06.22 パスワード再確認用
     public function sendPasswordResetNotification($token){

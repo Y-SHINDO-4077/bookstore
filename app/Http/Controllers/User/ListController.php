@@ -69,21 +69,21 @@ class ListController extends Controller
       $bsh->region=$request->input('region');
       $bsh->pref=$request->input('pref');
       $bsh->address=$request->input('address');
-      //以下、開発用
-      // if (isset($form['image'])) {
-      //   $path = $request->file('image')->store('public/image');
-      //   $bsh->image_path = basename($path);
-      // } else {
-      //     $bsh->image_path = null;
-      // }
+      //以下、開発用/lolipop用
+       if (isset($form['image'])) {
+         $path = $request->file('image')->store('public/image');
+         $bsh->image_path = basename($path);
+       } else {
+           $bsh->image_path = null;
+       }
       
       //以下、heroku用
-       if (isset($form['image'])) {
-        $path = putFile('/',$form['image'],'public');
-        $bsh->image_path = Storage::disk('s3')->url($path);
-      } else {
-          $bsh->image_path = null;
-      }
+    //   if (isset($form['image'])) {
+    //     $path = putFile('/',$form['image'],'public');
+    //     $bsh->image_path = Storage::disk('s3')->url($path);
+    //   } else {
+    //       $bsh->image_path = null;
+    //   }
       
       
       //ログイン中のユーザーIDを取得 2020.06.01

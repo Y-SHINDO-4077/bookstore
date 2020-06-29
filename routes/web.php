@@ -90,6 +90,20 @@ Route::get('/list/list_detail/{id}','ListController@detail');
 //使い方画面へ遷移 2020.06.16
 Route::get('howtouse','ListController@howtouse');
 
+//本登録メール 2020.06.30
+         Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+        // $this->get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); 2020.06.21 遷移先を変更
+         Route::get('email/verify/{id}', 'Auth\EmailController@verify')->name('auth.verify_main');
+        //$this->get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend'); //2020.06.21 遷移先変更
+        Route::get('email/resend', 'Auth\EmailController@resend')->name('auth.resend');
+        Route::post('email/resend', 'Auth\EmailController@postresend')->name('auth.resend_mail');//2020.06.23 再送メールを実行
+        
+//パスワード再設定用 2020.06.30       
+ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+         Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+         Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+         Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+
 /*管理者ログイン画面へ遷移 2020.06.16 */
 //Route::get('/admin/login','Admin\Auth\LoginController@showLoginForm')->name('admin.loginpg');
 

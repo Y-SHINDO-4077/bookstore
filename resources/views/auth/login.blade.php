@@ -10,6 +10,7 @@
             @if(session('warning'))
                <div class="alert alert-primary">
                    {{session('warning')}}
+                   <a href="{{action('Auth\EmailController@resend')}}">再送信する</a>
                </div>
             @endif
             <div class="card">
