@@ -119,7 +119,7 @@ class ListController extends Controller
       
       //return redirect('admin/list_detail/register');
       //登録完了後、ログイン一覧画面へ遷移,登録しました。のメッセージを表示する
-      return redirect('admin/list')->with('message','登録しました。');
+      return redirect('user/list')->with('message','登録しました。');
     }
     
     /*ログイン後、ログイン後のトップ画面に遷移 2020.05.17*/
