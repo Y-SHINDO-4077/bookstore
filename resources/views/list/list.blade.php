@@ -43,8 +43,8 @@
              </div>
               
             @if($bs->image_path != null)
-            <!--<img class="card-img mx-auto" src="{{ asset('/storage/image/'.$bs->image_path) }}" style="width:25%;height:25%;">-->
-            <img class="card-img mx-auto" src="{{ $bs->image_path }}" style="width:25%;height:25%;">
+            <img class="card-img mx-auto" src="{{ asset('/storage/image/'.$bs->image_path) }}" style="width:25%;height:25%;">
+            <!--<img class="card-img mx-auto" src="{{ $bs->image_path }}" style="width:25%;height:25%;">-->
             <div class="card-body" style="position:relative;">
               <!--<div class="card-img-overlay"> -->
                 <p class="card-text" style="position:absolute; top:5px; left:10px font-size:11px;">{{$bs->address}}</p>
@@ -77,10 +77,10 @@
  </div>
 @endsection 
 @section('footer')
-    <!-- jqueryの読み込む -->
+   <!-- jqueryの読み込む -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- google map api -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
     
 <script type="text/javascript">
      var currentInfoWindow = null; //インフォウィンドウの初期値
