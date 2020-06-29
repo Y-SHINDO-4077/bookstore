@@ -29,7 +29,7 @@
   <div class="tab-pane fade show active" id="index">
       <br>
      <p>1.本屋さん一覧をクリック</p>
-    <img src="./public/howtouse/ichiran1.jpg')" class="col-md-12" alt="header">
+    <img src="{{asset('/img/howtouse/ichiran1.jpg')}}" class="col-md-12" alt="header">
     <p>2.「地域名」「場所名」を入力して、検索をかけると絞り込みが出来ます。<br>
         各カードのヘッダー（場所名）をクリックすると、その場所を中心としたマップが表示されます。<br>
         （マップのマーカーが全て読み込まれた後にこの動作ができます）<br>
