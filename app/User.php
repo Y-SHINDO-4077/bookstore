@@ -48,6 +48,14 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     ];
     
+     /**
+     * The attributes that are gureded 2020.06.29
+     * @var array
+     */
+    protected $guarded = [
+        'admin'
+    ];
+    
     //2020.06.22 新規登録用
     public function sendEmailVerificationNotification(){
         $this->notify(new VerifyEmail);

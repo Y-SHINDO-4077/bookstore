@@ -100,15 +100,20 @@ Route::get('howtouse','ListController@howtouse');
 
 
 /*ログイン画面リンクから管理画面に遷移 2020.06.12 */
-Route::group(['prefix'=>'admin','middleware'=>'guest:admin'],function(){
- //Route::get('/login','AdministerController@admin'); //管理者ログイン画面
-  Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.loginpg');
-  Route::post('/login','Admin\Auth\LoginController@login')->name('admin.login');
-});
+// Route::group(['prefix'=>'admin','middleware'=>'guest:admin'],function(){
+//  //Route::get('/login','AdministerController@admin'); //管理者ログイン画面
+//   Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.loginpg');
+//   Route::post('/login','Admin\Auth\LoginController@login')->name('admin.login');
+// });
 
-/*管理画面をログイン後 2020.06.15 */
-Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function(){
+// /*管理画面をログイン後 2020.06.15 */
+// Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function(){
     
-   Route::post('logout','Admin\Auth\LoginController@logout')->name('admin.logout');
-   Route::get('login','Admin\HomeController@index')->name('admin.home');
-});
+//   Route::post('logout','Admin\Auth\LoginController@logout')->name('admin.logout');
+//   Route::get('login','Admin\HomeController@index')->name('admin.home');
+// });
+
+//2020.06.29 管理者用のとき、次に遷移
+// Route::group(['middleware' => 'admin_auth'],function(){
+//     Route::get('/admin/home','Admin\HomeController@index');
+// });

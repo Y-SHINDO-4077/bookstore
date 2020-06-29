@@ -97,6 +97,6 @@
 @endsection
 @section('footer')
 <!-- google map api --> 
-<script defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
 <script defer type="text/javascript" src="{{asset('js/js-googlemap.search.js')}}"></script>
 @endsection

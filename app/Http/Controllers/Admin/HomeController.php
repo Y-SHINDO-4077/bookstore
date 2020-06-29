@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Controller\Admin;
+
 
 class HomeController extends Controller
 {
@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('admin_auth');
     }
 
     /**
@@ -27,6 +27,6 @@ class HomeController extends Controller
     {
         //return view('home');
         //管理者ログアウト後、管理者ログイン画面へ遷移 2020.06.13
-        return view('admin.administer.administer');
+        return view('admin.administer.home');
     }
 }
