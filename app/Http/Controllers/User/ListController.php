@@ -50,9 +50,11 @@ class ListController extends Controller
       // }
       
         //以下、heroku用
-      if (isset($form['image'])) {
-        
-        $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
+     // if($request->file('image'))
+      if (isset($form['image']))
+      {
+        //var_dump($request->file('image'));
+        $path = Storage::disk('s3')->putFile('/',$request->file('image'),'public');
         $bs->image_path = Storage::disk('s3')->url($path);
       } else {
          
