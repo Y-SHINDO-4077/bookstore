@@ -3,6 +3,10 @@
 @section('title','リスト一覧を見る')
 
 @section('content')
+  <!--<?php-->
+  <!-- require_once ('../aws/aws-autoloader.php');-->
+  <!-- use Aws\S3\S3Client;-->
+  <!--?>-->
  <div class="container">
     <div class="row">
     <div class="mx-auto">
