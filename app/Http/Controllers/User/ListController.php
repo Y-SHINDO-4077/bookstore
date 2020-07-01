@@ -237,7 +237,7 @@ class ListController extends Controller
        $id = $request->id;
        $bs = Bookstores::where('id',$id)->first();
        $cm = Comments::where('store_id',$id)->get();
-       print_r($bs);
+       //print_r($bs);
        return view('user.list_detail.detail_comment',['bs'=>$bs,'cm'=>$cm]);
    }
    
