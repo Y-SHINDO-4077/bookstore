@@ -42,23 +42,35 @@ class ListController extends Controller
       $bs->pref=$request->input('pref');
       $bs->address=$request->input('address');
       //開発・lolopop用
-      // if (isset($form['image'])){
+      // print($request->file('image'));
+      // if ($request->file('image'))
+      // {
       //   $path = $request->file('image')->store('public/image');
       //   $bs->image_path = basename($path);
       // } else {
       //     $bs->image_path = null;
       // }
-      
-        //以下、heroku用
-     // if($request->file('image'))
-      if (isset($form['image']))
-      {
-        //var_dump($request->file('image'));
-        $path = Storage::disk('s3')->putFile('/',$request->file('image'),'public');
-        $bs->image_path = Storage::disk('s3')->url($path);
-      } else {
+    //   print($form['image']);
+    //     //以下、heroku用
+    // if($request->file('image'))
+    // //   if (isset($form['image']))
+    //   {
+    //     //var_dump($request->file('image'));
+    //     $path = Storage::disk('s3')->putFile('/',$request->file('image'),'public');
+    //     $bs->image_path = Storage::disk('s3')->url($path);
+    //     var_dump($bs->image_path);
+    //   } else {
          
-          $bs->image_path = null;
+    //       $bs->image_path = null;
+    //   }
+    $image = $request->file('image');
+    if($image)
+      {
+      
+      $path = Storage::disk('s3')->put('/', $image, 'public');
+      $bs->image_path = Storage::disk('s3')->url($path);
+      } else {
+              $bs->image_path = null;
       }
       //ログイン中のユーザーIDを取得 2020.06.01
       $bs->user_id=Auth::id();
@@ -93,12 +105,21 @@ class ListController extends Controller
       // }
       
       //以下、heroku用
-      if ($request->input('image')) {
+      // if ($request->input('image')) {
         
-        $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
-        $bsh->image_path = Storage::disk('s3')->url($path);
+      //   $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
+      //   $bsh->image_path = Storage::disk('s3')->url($path);
+      // } else {
+      //     $bsh->image_path = null;
+      // }
+      $image = $request->file('image');
+    if($image)
+      {
+      
+      $path = Storage::disk('s3')->put('/', $image, 'public');
+      $bs->image_path = Storage::disk('s3')->url($path);
       } else {
-          $bsh->image_path = null;
+              $bs->image_path = null;
       }
       
       
@@ -216,6 +237,7 @@ class ListController extends Controller
        $id = $request->id;
        $bs = Bookstores::where('id',$id)->first();
        $cm = Comments::where('store_id',$id)->get();
+       print_r($bs);
        return view('user.list_detail.detail_comment',['bs'=>$bs,'cm'=>$cm]);
    }
    
