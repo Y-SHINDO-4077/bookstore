@@ -12,7 +12,7 @@
       <div class="map"> 
       <div id="map" style="height: 500px; width:100%; margin: 2rem auto 0;"></div>
       </div>
-     <div class="mx-auto">  
+       
      <div class="col-md-12" style="display:inline-block;">
      
         <a type="button" href="{{action('User\ListController@add')}}" class="btn btn-primary">新規作成</a>
