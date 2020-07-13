@@ -6,13 +6,14 @@
   
  <div class="container">
     <div class="row">
-    <div class="mx-auto">
+    
        <div class="col-md-10">
              <h2>一覧</h2>
        </div>
        <div class="map mx-auto">
       <div id="map" style="height: 500px; width:100%; margin: 2rem auto 0;"></div>
        </div>
+      <div class="mx-auto">
      <div class="col-md-12" style="display:inline-block;">
  
         <form class="form-inline my-lg-0"　action="{{ action('ListController@list') }}" method="get"> 
