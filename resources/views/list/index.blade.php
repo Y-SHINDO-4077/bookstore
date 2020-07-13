@@ -6,8 +6,9 @@
    <div class="container">
        <div class="row">
            <div class="map mx-auto">
-               
-               <div id="map" style="height: 500px; width:720px; margin: 2rem auto 0;"></div>
+              
+               <!--<div id="map"></div>-->
+               <div id="map" style="width:100%; height:500px; margin: 2rem auto 0;"></div>
            </div>
        </div>
    </div>
@@ -16,7 +17,7 @@
     <!-- jqueryの読み込む -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- google map api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
     
 <script type="text/javascript">
      var currentInfoWindow = null; //インフォウィンドウの初期値

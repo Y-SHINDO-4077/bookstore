@@ -16,6 +16,24 @@
          
          <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
          
+         <style>
+          /*--レスポンシブ対応-- */
+          @media only screen and (max-width:796px){
+           .map{
+           width:50%;
+           height:auto;
+               }
+          }
+          .map{
+           position:relative;
+           
+           margin:0 auto;
+           width:100%;
+          }
+            /* --  --*/  
+          
+         </style>
+         
      </head>    
      <body>
          <div id="app">

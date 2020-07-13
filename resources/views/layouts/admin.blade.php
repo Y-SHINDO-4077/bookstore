@@ -8,18 +8,32 @@
          <meta name="csrf-token" content="{{ csrf_token() }}">
          
          <style>
-      #map {
-        height: 100%;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .search {
-        height:100%;
-        text-align:center;
-      }
+      /*--レスポンシブ対応-- */
+       @media only screen and (max-width:796px){
+           .map{
+           width:50%;
+           height:auto;
+               }
+          }
+          .map{
+           position:relative;
+           margin:0 auto;
+           width:100%;
+          }
+      /* --  --*/      
+    
+      /*#map {*/
+      /*  height: 100%;*/
+      /*}*/
+      /*html, body {*/
+      /*  height: 100%;*/
+      /*  margin: 0;*/
+      /*  padding: 0;*/
+      /*}*/
+      /*.search {*/
+      /*  height:100%;*/
+      /*  text-align:center;*/
+      /*}*/
       </style>
          
          <title>@yield('title')</title>

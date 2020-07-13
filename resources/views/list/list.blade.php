@@ -10,9 +10,9 @@
        <div class="col-md-10">
              <h2>一覧</h2>
        </div>
-       
-      <div id="map" style="height: 500px; width:720px; margin: 2rem auto 0;"></div>
-      
+       <div class="map mx-auto">
+      <div id="map" style="height: 500px; width:100%; margin: 2rem auto 0;"></div>
+       </div>
      <div class="col-md-12" style="display:inline-block;">
  
         <form class="form-inline my-lg-0"　action="{{ action('ListController@list') }}" method="get"> 
@@ -81,7 +81,7 @@
    <!-- jqueryの読み込む -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- google map api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
     
 <script type="text/javascript">
      var currentInfoWindow = null; //インフォウィンドウの初期値

@@ -5,13 +5,14 @@
 @section('content')
  <div class="container">
     <div class="row">
-    <div class="mx-auto">
+    
        <div class="col-md-10">
              <h2>一覧</h2>
        </div>
-       
-      <div id="map" style="height: 500px; width:720px; margin: 2rem auto 0;"></div>
-      
+      <div class="map"> 
+      <div id="map" style="height: 500px; width:100%; margin: 2rem auto 0;"></div>
+      </div>
+     <div class="mx-auto">  
      <div class="col-md-12" style="display:inline-block;">
      
         <a type="button" href="{{action('User\ListController@add')}}" class="btn btn-primary">新規作成</a>
@@ -82,7 +83,7 @@
     <!-- jqueryの読み込む -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- google map api -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
     
 <script type="text/javascript">
      var currentInfoWindow = null; //インフォウィンドウの初期値

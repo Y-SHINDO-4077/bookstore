@@ -7,17 +7,18 @@
 @section('content')
  <div class="container">
      <div class="row">
-    　<div class="mx-auto">
+    　
        <div class="col-md-10">
              <h2>新規作成</h2>
        </div>
-      
-      <div id="map" style="height: 500px; width: 720px; margin: 2rem auto 0;"></div>
-
+      <div class="map"> 
+      <div id="map" style="height: 500px; width:100%; margin: 2rem auto 0;"></div>
+      </div>
+    <div class="mx-auto">
     <!--検索窓-->
     <div class="col-md-12" style="text-align:center;">
       <div class="form-group form-inline">
-          <input type="text" class="col-md-5 form-control" class="form-control" id="keyword">
+          <input type="text" class="col-md-4 form-control" class="form-control" id="keyword">
           <button type="button" id="search" class="btn btn-outline-secondary">検索</button>
           <button id="init" class="btn btn-outline-success"><span style="color:blue;cursor:pointer;">地図の状態を初期化</span></a>
       <button id="clear" class="btn btn-outline-info"><span style="color:blue;cursor:pointer;">入力内容削除</span></a>
@@ -97,6 +98,6 @@
 @endsection
 @section('footer')
 <!-- google map api --> 
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnd2sgN1VYg7ZgdNL27zkzWkTS8mRdOCk&libraries=places"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
 <script defer type="text/javascript" src="{{asset('js/js-googlemap.search.js')}}"></script>
 @endsection
