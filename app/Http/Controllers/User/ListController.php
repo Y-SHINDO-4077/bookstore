@@ -133,6 +133,7 @@ class ListController extends Controller
       $bsh->edited_at = Carbon::now();
       $bsh->save();
       
+      if($request->input('handdle_name')!==null && $request->input('comment') !=null){
       //comments tableに値を挿入 2020.06.01
       $cm=new Comments;
       $cm->store_id =$last_insert_id;
@@ -153,6 +154,7 @@ class ListController extends Controller
       $cmh->edited_at = Carbon::now();
       
       $cmh->save();
+      }
       
       //return redirect('admin/list_detail/register');
       //登録完了後、ログイン一覧画面へ遷移,登録しました。のメッセージを表示する
